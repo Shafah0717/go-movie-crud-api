@@ -59,6 +59,7 @@ func updateMovie(w http.ResponseWriter, r *http.Request){
 			var movie Movie
 			_ = json.NewDecoder(r.Body).Decode(&movie)
 			movie.ID = params["id"]
+			movies = append(movies, movie)
 			json.NewEncoder(w).Encode(movie)
 			return
 		}
@@ -85,7 +86,7 @@ func main(){
 	r.HandleFunc("/movies/{id}",getMovie).Methods("GET")
 	r.HandleFunc("/movies",createMovie).Methods("POST")
 	r.HandleFunc("/movies/{id}",updateMovie).Methods("PUT")
-	r.HandleFunc("movies/{id}",deleteMovie).Methods("DELETE")
+	r.HandleFunc("/movies/{id}",deleteMovie).Methods("DELETE")
 
 	
 	fmt.Printf("starting server at port 8000")
